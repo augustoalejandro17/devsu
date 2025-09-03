@@ -161,3 +161,6 @@ Supuestos: 50k MAU, 10k DAU, 5 RPS pico en consultas, 1 RPS en transferencias; r
   - Verde: Costo/MAU ≤ $0.06; AMBAR: $0.06–$0.1; ROJO: > $0.1.
   - KPI ahorro: % de requests servidos por cache ≥ 60%; % de queries a replica ≥ 70%.
 
+
+## 18. Repositorio del proyecto
+Repositorio público: https://github.com/augustoalejandro17/devsu
