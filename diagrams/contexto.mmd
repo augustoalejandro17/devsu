@@ -1,0 +1,22 @@
+graph TD
+U1["Cliente Web"]
+U2["Cliente Móvil"]
+SYS["Sistema 'BP Banca por Internet'"]
+CORE["Core Bancario"]
+INFO["Sistema Complementario de Clientes"]
+AUTH["IdP OAuth2/OIDC"]
+NOTIF["Proveedores de Notificaciones<br/>Email/SMS/Push"]
+SPI["BCE - SPI Interbancario"]
+EKYC["eKYC / Registro Civil / Proveedor biométrico"]
+MON["Monitoreo/SIEM/Alertas"]
+AUD["Base de Datos de Auditoría"]
+U1 --> SYS
+U2 --> SYS
+SYS --> AUTH
+SYS --> CORE
+SYS --> INFO
+SYS --> NOTIF
+SYS --> SPI
+SYS --> EKYC
+SYS --> MON
+SYS --> AUD

@@ -1,0 +1,21 @@
+sequenceDiagram
+actor U as Usuario
+participant APP as App/SPA
+participant BFF as BFF
+participant TRX as Svc Transferencias
+participant CORE as Core Bancario
+participant SPI as SPI-BCE
+U->>APP: Solicita transferencia
+APP->>BFF: POST /transfers (idempotency-key)
+BFF->>TRX: Crear solicitud
+TRX->>TRX: Validaciones (límites, listas, geocerca)
+TRX->>CORE: Débito cuenta origen
+CORE-->>TRX: Débito OK
+TRX->>SPI: Enviar mensaje interbancario
+SPI-->>TRX: Recibido (ACK)
+TRX-->>BFF: Estado=sent_spi
+BFF-->>APP: Respuesta (trackingId)
+SPI-->>TRX: Settlement (compensada/rechazada)
+TRX->>CORE: Crédito/reverso según resultado
+TRX->>BUS: Evento Auditoría/Notificación
+BUS-->>NOTIF: SMS/Email/Push

@@ -1,0 +1,59 @@
+graph TD
+subgraph "Frontend"
+SPA["SPA Web (React/Next.js)"]
+MOB["App Móvil (Flutter o React Native)"]
+end
+AGW["API Gateway / WAF"]
+BFF["BFF Web/Móvil"]
+subgraph "Backend - Microservicios"
+PRO["Servicio Perfil Cliente"]
+MOV["Servicio Movimientos"]
+TRX["Servicio Transferencias"]
+NOT["Servicio Notificaciones"]
+AUDS["Servicio Auditoría"]
+AUTHAD["Adaptador Autenticación"]
+ANTI["Integración Antifraude / AML"]
+end
+subgraph "Datos"
+RDB["DB Transaccional (Aurora PostgreSQL)"]
+CACHE["Cache Redis"]
+AUDDB["DB Auditoría Append-only"]
+OBJ["Almacenamiento de Objetos (S3/Blob)"]
+end
+BUS["Bus de Mensajes (Kafka o SNS/SQS)"]
+OBS["Observabilidad (OpenTelemetry + Prometheus/Grafana)"]
+EXTCORE["Core Bancario"]
+EXTINFO["Sistema Complementario"]
+EXTSPI["BCE - SPI"]
+EXTAUTH["IdP OAuth2/OIDC"]
+EXTNOT["Email/SMS/Push Providers"]
+SPA --> AGW
+MOB --> AGW
+AGW --> BFF
+BFF --> PRO
+BFF --> MOV
+BFF --> TRX
+BFF --> NOT
+PRO --> RDB
+PRO --> CACHE
+MOV --> RDB
+TRX --> RDB
+TRX --> CACHE
+NOT --> EXTNOT
+AUTHAD --> EXTAUTH
+TRX --> EXTSPI
+PRO --> EXTCORE
+MOV --> EXTCORE
+PRO --> EXTINFO
+AUDS --> AUDDB
+PRO --> BUS
+MOV --> BUS
+TRX --> BUS
+BUS --> AUDS
+OBS --> AGW
+OBS --> BFF
+OBS --> PRO
+OBS --> MOV
+OBS --> TRX
+OBS --> NOT
+OBS --> AUDS

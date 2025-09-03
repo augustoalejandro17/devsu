@@ -1,0 +1,22 @@
+graph TD
+UI["API REST Controller"]
+APP["Aplicación/Orquestador de Transferencias (Saga)"]
+IDEMP["Idempotency Store"]
+VAL["Validador Reglas/Límites"]
+REP["Repositorio Transacciones (PostgreSQL)"]
+OUT["Outbox Publisher -> Bus"]
+ADAPTCORE["Adaptador Core Bancario"]
+ADAPTSPI["Adaptador SPI-BCE"]
+ADAPTFRAUD["Adaptador AML/Antifraude"]
+NOTPROD["Productor Notificaciones"]
+AUDPROD["Productor Eventos Auditoría"]
+UI --> APP
+APP --> IDEMP
+APP --> VAL
+APP --> REP
+APP --> ADAPTCORE
+APP --> ADAPTSPI
+APP --> ADAPTFRAUD
+APP --> OUT
+OUT --> NOTPROD
+OUT --> AUDPROD
